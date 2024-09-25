@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_58872_needit_needit</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>NeedIt Debugging Practice</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+	//die short_description für das derzeitige (current) Objekt wird festgelegt.
+	current.short_description = "This text set by the Debugging Business Rules business rule.";
+	//der Aktuelle Status (state (z.b: offen, geschlossen etc.)) wird in myNum gespeichert.
+	var myNum = current.state;
+
+	//The function in this try/catch is not defined
+	//hier wird eine Funktion die nicht existiert aufgerufen, die nicht existiert um einen Laufzeitfehler zu simulieren
+	//der try Block versucht den Code auszuführen
+	try{
+		thisFunctionDoesNotExist();
+
+	}
+	//der catch block wird ausgeführt wenn ein Fehler auftritt und eine Fehlermeldung mit gs.error ausgibt
+	catch(err){
+		gs.error("NeedIt App: a JavaScript runtime error occured - " + err);
+	}
+
+	//This function is not defined and is not part of a try/catch
+	//diese Function ist nicht von einem try/catch-Block gschützt, dies führt zu unhandeled error (Skript stoppt vermutlich)
+	thisFunctionAlsoDoesNotExist();
+
+	//getNum and setNum demonstrate JavaScript Closure
+	//es wird eine numFunc definiert die ein Closure erstellt (Konzept das es einer funktion ermöglicht auf ihre äußeren Variabelen zuzugreifen, selbst nachdem die äußere Funktion abgeschlossen ist)
+	//die Funktion gibt ein Objekt mit zwei Methoden zurück (getNum und setNum) diese Methoden können auf x zugreifen slebst wenn num Func abgeschlossen ist.
+	var x = 7;
+
+	function numFunc(){
+		var x = 10;
+		return{
+			getNum: function(){
+				return x;
+			},
+			setNum: function(newNum){
+				x = newNum;
+			}
+		};
+	}
+	//numFunc wird aufgerufen und das zurückgegebene Objekt wird in der Variable callFunc gespeichert. Dann werden beide Methoden aufgerufen.
+	var callFunc = numFunc();
+	callFunc.getNum();//gibt aktuellen wert von x wieder
+	callFunc.getNum(2);//setzt x auf 2
+	callFunc.getNum();//gibt x jetzt als 2 wieder
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-25 08:37:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2cec1daa53b01210a91438f0a0490e93</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>NeedIt Debugging Practice</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_2cec1daa53b01210a91438f0a0490e93</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-25 09:00:08</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=2cec1daa53b01210a91438f0a0490e93"/>
+</record_update>
